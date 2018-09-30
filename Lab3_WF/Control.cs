@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Lab3
+namespace Lab3_WF
 {
-    class Program
+    class Control
     {
-        static void Main(string[] args)
+        public static List<char>[] GetTable()
         {
             StreamReader std = new StreamReader("input.txt");
             int n, m;
@@ -27,16 +27,16 @@ namespace Lab3
                 string name;
                 name = std.ReadLine();
                 //char t1=name
-                names[i] = (char)(i+65);
-                next[name[0]-65] = name[2];
+                names[i] = (char)(i + 65);
+                next[name[0] - 65] = name[2];
             }
             std.Close();
-            names[n-1]= (char)(n + 64);
+            names[n - 1] = (char)(n + 64);
             char pr = '\0';
             List<char> pri = new List<char>();
             List<char> newpri = new List<char>();
             pri.Add('\0');
-            int prior=0;
+            int prior = 0;
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -51,7 +51,7 @@ namespace Lab3
                 }
                 // newpri.
                 pri.RemoveRange(0, pri.Count);
-                pri.InsertRange(0, newpri);                
+                pri.InsertRange(0, newpri);
                 if (next[i] != '\0')
                 {
                     pred[next[i] - 65]++;
@@ -71,36 +71,24 @@ namespace Lab3
                 kolvo[priority[i]] = pred[i];
             }
             int kolv = 0;
-            while (kolv!=n)//pred[next[way[n - 1] - 65] - 65]
+            while (kolv != n)//pred[next[way[n - 1] - 65] - 65]
             {
                 int j = 0;
                 pred1.CopyTo(pred, 0);
-                for (int i = n - 1; i >= 0&&j<m; i--)
+                for (int i = n - 1; i >= 0 && j < m; i--)
                 {
-                    if (way[i] != '\0'&&pred[way[i] - 65] == 0)
+                    if (way[i] != '\0' && pred[way[i] - 65] == 0)
                     {
                         onehour[j].Add(way[i]);
                         j++;
-                        if (next[way[i] - 65]!='\0')
+                        if (next[way[i] - 65] != '\0')
                             pred1[next[way[i] - 65] - 65]--;
                         way[i] = '\0';
                         kolv++;
                     }
-                }                
+                }
             }
-            //while (kolvo[0]!=0)
-            /*for (int i = 0; i < m; i++)
-            {int pos = 0;
-                for (int j = n - 1; j >= 0; j++)
-                    { 
-                        if (kolvo[j] == 0)
-                        {
-                            onehour[pos] = way[j];
-
-                        }
-                    }
-            }*/
-
+            return onehour;
         }
     }
 }
